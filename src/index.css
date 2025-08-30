@@ -1,0 +1,362 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------
+   Variables (tu paleta)
+   ------------------------- */
+@layer base {
+:root {
+  /* Fondo / texto */
+  --background: 150 10% 97%;
+  --foreground: 210 8% 12%;
+
+  /* Cards / popovers */
+  --card: 0 0% 100%;
+  --card-foreground: 210 8% 12%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 210 8% 12%;
+
+  /* Primary: verde oscuro (botones, elementos activos) */
+  --primary: 150 45% 24%;
+  --primary-foreground: 0 0% 100%;
+
+  --primary-glow: 150 45% 34%;
+  --primary-deep: 150 50% 16%;
+
+  /* Secondary / muted */
+  --secondary: 150 8% 94%;
+  --secondary-foreground: 210 8% 12%;
+  --muted: 150 8% 96%;
+  --muted-foreground: 210 8% 46%;
+
+  /* Accent: dorado */
+  --accent: 44 92% 52%;
+  --accent-foreground: 210 10% 10%;
+  --accent-light: 44 85% 70%;
+
+  /* Destructive (rojo) */
+  --destructive: 0 70% 48%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Borders / inputs / ring */
+  --border: 150 10% 88%;
+  --input: 150 10% 88%;
+  --ring: 150 45% 30%;
+
+  /* Gradientes / sombras */
+  --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+  --gradient-hero: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-deep)) 100%);
+  --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(44 85% 40%) 100%);
+
+  --shadow-soft: 0 6px 24px -6px hsl(150 45% 24% / 0.08);
+  --shadow-primary: 0 10px 40px -10px hsl(150 45% 24% / 0.18);
+
+  --transition-smooth: all 0.24s cubic-bezier(0.4, 0, 0.2, 1);
+  --radius: 0.5rem;
+
+  /* Sidebar */
+  --sidebar-width: 260px;
+  --sidebar-collapsed: 72px;
+  --sidebar-background: 150 14% 96%;
+  --sidebar-foreground: 210 8% 12%;
+  --sidebar-primary: 150 45% 24%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 44 92% 95%;
+  --sidebar-accent-foreground: 210 8% 12%;
+  --sidebar-border: 150 10% 90%;
+  --sidebar-ring: 44 92% 52%;
+}
+
+/* Dark theme (mantén tu bloque .dark si lo quieres) */
+.dark {
+  --background: 150 24% 6%;
+  --foreground: 210 12% 96%;
+  --card: 150 24% 8%;
+  --card-foreground: 210 12% 96%;
+  --popover: 150 24% 8%;
+  --popover-foreground: 210 12% 96%;
+  --primary: 150 48% 46%;
+  --primary-foreground: 210 12% 6%;
+  --secondary: 150 12% 14%;
+  --secondary-foreground: 210 12% 96%;
+  --muted: 150 12% 14%;
+  --muted-foreground: 210 12% 72%;
+  --accent: 44 92% 54%;
+  --accent-foreground: 210 12% 6%;
+  --accent-light: 44 85% 70%;
+  --destructive: 0 65% 36%;
+  --destructive-foreground: 210 12% 96%;
+  --border: 150 12% 14%;
+  --input: 150 12% 14%;
+  --ring: 44 92% 54%;
+  --sidebar-background: 150 12% 6%;
+  --sidebar-foreground: 210 12% 96%;
+  --sidebar-primary: 44 92% 54%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 150 8% 12%;
+  --sidebar-accent-foreground: 210 12% 96%;
+  --sidebar-border: 150 8% 12%;
+  --sidebar-ring: 44 92% 54%;
+}
+}
+
+/* -------------------------
+   Base helpers / global
+   ------------------------- */
+@layer base {
+  * { box-sizing: border-box; }
+
+  html { font-size: 15px; } /* base móvil */
+  @media (min-width: 768px) { html { font-size: 16px; } }
+  @media (min-width: 1280px) { html { font-size: 16px; } }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  /* Utility para aplicar sombras y radio */
+  .card {
+    background: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-soft);
+    border-radius: var(--radius);
+    padding: 1rem;
+  }
+
+  /* Layout: mobile-first */
+  .app {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid hsl(var(--border));
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.02) 100%);
+  }
+  .header .brand {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-weight: 600;
+  }
+  .header .hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: .5rem;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid transparent;
+  }
+  .header .hamburger:focus { outline: none; box-shadow: 0 0 0 4px hsl(var(--ring) / 0.12); }
+
+  /* Main area */
+  .main {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  /* Sidebar (mobile collapses by default: hidden) */
+  .sidebar {
+    background: hsl(var(--sidebar-background));
+    color: hsl(var(--sidebar-foreground));
+    border-right: 1px solid hsl(var(--sidebar-border));
+    transition: var(--transition-smooth);
+    padding: 1rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Nav items */
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .55rem .75rem;
+    border-radius: .5rem;
+    color: inherit;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .nav-item:hover { background: hsl(var(--muted)); }
+  .nav-item.active {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-primary);
+  }
+
+  /* Sidebar collapsed state (use JS to toggle class `sidebar--open` on .app) */
+  .app .sidebar { display: none; }               /* mobile: hidden by default */
+  .app.sidebar--open .sidebar { display: flex; position: fixed; inset: 0 0 0 0; width: 260px; max-width: 86%; z-index: 60; } /* slide-over */
+  .app.sidebar--open .main { filter: blur(0.0); }
+
+  /* Backdrop when sidebar open (mobile) */
+  .sidebar-backdrop {
+    display: none;
+  }
+  .app.sidebar--open .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.36);
+    z-index: 50;
+  }
+
+  /* Cards grid */
+  .grid-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) { .grid-cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .grid-cards { grid-template-columns: repeat(3, 1fr); } }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem .9rem;
+    border-radius: .5rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: var(--transition-smooth);
+  }
+  .btn:focus { outline: none; box-shadow: 0 6px 24px -6px hsl(var(--ring) / 0.18); }
+
+  .btn-primary {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-primary);
+  }
+  .btn-primary:hover { filter: brightness(1.04); transform: translateY(-1px); }
+
+  .btn-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-light)));
+    color: hsl(var(--accent-foreground));
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: inherit;
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* Inputs / forms */
+  .input {
+    width: 100%;
+    padding: .6rem .75rem;
+    border-radius: .375rem;
+    border: 1px solid hsl(var(--input));
+    background: hsl(var(--popover));
+    color: inherit;
+  }
+  .input:focus { outline: none; box-shadow: 0 4px 18px -6px hsl(var(--ring) / 0.18); border-color: hsl(var(--ring)); }
+
+  /* Tables responsive */
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: .5rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+  }
+  th, td {
+    text-align: left;
+    padding: .75rem;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+  th {
+    font-weight: 600;
+    background: hsl(var(--secondary));
+  }
+
+  /* Badges */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .2rem .5rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: .775rem;
+  }
+  .badge-accent { background: hsl(var(--accent)); color: hsl(var(--accent-foreground)); }
+  .badge-muted { background: hsl(var(--muted)); color: hsl(var(--muted-foreground)); }
+
+  /* Hero / header section */
+  .hero {
+    padding: 1.25rem;
+    border-radius: var(--radius);
+    background: var(--gradient-hero);
+    color: hsl(var(--primary-foreground));
+    box-shadow: var(--shadow-primary);
+  }
+
+  /* Sidebar desktop: fixed column layout */
+  @media (min-width: 768px) {
+    .app {
+      grid-template-columns: var(--sidebar-width) 1fr;
+      grid-template-rows: 100vh;
+      height: 100vh;
+    }
+    .sidebar {
+      display: flex;
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      max-width: var(--sidebar-width);
+      position: relative;
+      height: 100vh;
+      overflow: auto;
+      padding: 1.25rem;
+    }
+    .header {
+      grid-column: 2 / 3;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .main {
+      padding: 1.5rem;
+      grid-column: 2 / 3;
+      overflow: auto;
+      height: calc(100vh - 64px);
+    }
+
+    /* If want collapsed desktop sidebar: add .sidebar--collapsed on .app */
+    .app.sidebar--collapsed .sidebar {
+      width: var(--sidebar-collapsed);
+      min-width: var(--sidebar-collapsed);
+      max-width: var(--sidebar-collapsed);
+    }
+    .app.sidebar--collapsed .nav-item .label { display: none; }
+    .app.sidebar--collapsed .brand .brand-text { display: none; }
+  }
+
+  /* Small utilities */
+  .muted { color: hsl(var(--muted-foreground)); }
+  .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .5rem; }
+  .small { font-size: .875rem; }
+}
